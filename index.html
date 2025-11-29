@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Whiskey Tobacco Firearms (WTF)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Whiskey Tobacco Firearms (WTF) – private membership club for cigars, whiskey and firearms-related training from licensed businesses only. No private sellers."
+  />
+  <style>
+    /* -------- RESET / BASE -------- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #050608;
+      color: #f5f5f5;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; }
+
+    .page-root { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* -------- HEADER / NAV -------- */
+    header {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      background: rgba(5,6,8,0.9);
+    }
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 0;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 2px solid #c58b3a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      background: radial-gradient(circle at 20% 0%, #222, #050608);
+    }
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+    .logo-text span:first-child {
+      font-weight: 600;
+      letter-spacing: 0.12em;
+    }
+    .logo-text span:last-child {
+      font-size: 0.7rem;
+      opacity: 0.7;
+      letter-spacing: 0.12em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.2rem;
+      font-size: 0.88rem;
+    }
+    .nav-links button {
+      background: none;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      opacity: 0.8;
+    }
+    .nav-links button:hover { opacity: 1; }
+    .nav-links button.active {
+      opacity: 1;
+      border-bottom: 2px solid #c58b3a;
+      padding-bottom: 0.1rem;
+    }
+    .nav-cta {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    /* -------- BUTTONS -------- */
+    .btn {
+      border-radius: 999px;
+      padding: 0.5rem 1.1rem;
+      font-size: 0.9rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      white-space: nowrap;
+    }
+    .btn-outline {
+      border-color: rgba(255,255,255,0.3);
+      background: transparent;
+      color: #f5f5f5;
+    }
+    .btn-primary {
+      border-color: #c58b3a;
+      background: linear-gradient(120deg, #c58b3a, #8c5a19);
+      color: #050608;
+      font-weight: 600;
+    }
+    .btn-outline:hover { border-color: #c58b3a; }
+    .btn-primary:hover { filter: brightness(1.05); }
+
+    /* -------- COMMON SECTIONS -------- */
+    .hero {
+      padding: 3rem 0 2.4rem;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 2.4rem;
+      align-items: center;
+    }
+    .eyebrow {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #c58b3a;
+      margin-bottom: 0.4rem;
+    }
+    .hero-title {
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      margin-bottom: 0.9rem;
+    }
+    .hero-text {
+      font-size: 0.98rem;
+      max-width: 32rem;
+      color: rgba(245,245,245,0.86);
+      margin-bottom: 1.4rem;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    .hero-note {
+      font-size: 0.78rem;
+      color: rgba(245,245,245,0.7);
+      max-width: 32rem;
+    }
+    .hero-note strong { color: #f8e3c0; }
+
+    .hero-card {
+      border-radius: 1.1rem;
+      padding: 1.6rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      background:
+        radial-gradient(circle at 0 0, rgba(197,139,58,0.15), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(52,143,191,0.25), transparent 55%),
+        #07080b;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.5);
+      font-size: 0.85rem;
+    }
+    .hero-card h2 {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 0.8rem;
+      opacity: 0.9;
+    }
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 0.9rem;
+    }
+    .pill {
+      border-radius: 999px;
+      padding: 0.28rem 0.7rem;
+      font-size: 0.7rem;
+      background: rgba(5,6,8,0.85);
+      border: 1px solid rgba(255,255,255,0.16);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.9;
+    }
+    .hero-card ul { list-style: none; margin: 0.4rem 0 0.9rem; padding: 0; }
+    .hero-card li {
+      margin-bottom: 0.4rem;
+      display: flex;
+      gap: 0.4rem;
+      align-items: flex-start;
+    }
+    .hero-card li span.bullet {
+      font-size: 0.9rem;
+      color: #c58b3a;
+      margin-top: 0.05rem;
+    }
+    .hero-card-footer {
+      font-size: 0.72rem;
+      color: rgba(245,245,245,0.75);
+      border-top: 1px dashed rgba(255,255,255,0.2);
+      padding-top: 0.7rem;
+    }
+
+    section.section {
+      padding: 2.4rem 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .section-title {
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 1.4rem;
+      color: rgba(245,245,245,0.9);
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.4rem;
+    }
+    .card {
+      border-radius: 1rem;
+      padding: 1.1rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: radial-gradient(circle at 0 0, rgba(197,139,58,0.12), transparent 55%),
+                  #050608;
+      font-size: 0.86rem;
+    }
+    .card h4 {
+      font-size: 0.9rem;
+      margin-bottom: 0.4rem;
+    }
+    .card p {
+      font-size: 0.83rem;
+      color: rgba(245,245,245,0.82);
+    }
+    .card small {
+      display: block;
+      margin-top: 0.4rem;
+      font-size: 0.74rem;
+      color: rgba(245,245,245,0.7);
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: flex-start;
+      font-size: 0.86rem;
+    }
+    .two-col p {
+      color: rgba(245,245,245,0.85);
+      margin-bottom: 0.7rem;
+    }
+    .two-col ul { padding-left: 1rem; margin-top: 0.5rem; }
+    .two-col li { margin-bottom: 0.4rem; }
+    .policy-box {
+      border-radius: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 1rem;
+      background: #050608;
+      font-size: 0.8rem;
+    }
+    .policy-box strong { color: #f8e3c0; }
+
+    /* -------- SUBPAGES (MEMBER / VENDOR) -------- */
+    .view { display: none; }
+    .view-active { display: block; }
+
+    .sub-hero {
+      padding: 2.5rem 0 1.2rem;
+    }
+    .sub-hero h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.4rem;
+    }
+    .sub-hero p {
+      max-width: 40rem;
+      color: rgba(245,245,245,0.85);
+    }
+
+    .sub-content { padding-bottom: 2.5rem; }
+
+    .voucher-panel {
+      margin-top: 1.4rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 1rem;
+      background: #050608;
+      font-size: 0.86rem;
+    }
+    .voucher-code-box {
+      margin-top: 0.8rem;
+      padding: 0.9rem;
+      border-radius: 0.6rem;
+      border: 1px dashed rgba(255,255,255,0.3);
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      text-align: center;
+      letter-spacing: 0.18em;
+      font-size: 0.9rem;
+    }
+    .voucher-status {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: rgba(245,245,245,0.8);
+    }
+    .voucher-status span.used { color: #f39c12; }
+
+    .input-row {
+      margin-top: 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .input-row input {
+      flex: 1;
+      min-width: 160px;
+      padding: 0.4rem 0.6rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: #050608;
+      color: #f5f5f5;
+      font-size: 0.86rem;
+    }
+
+    /* -------- FOOTER -------- */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 1.3rem 0 2rem;
+      font-size: 0.78rem;
+      color: rgba(245,245,245,0.7);
+      margin-top: auto;
+    }
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    /* -------- RESPONSIVE -------- */
+    @media (max-width: 900px) {
+      .hero-inner,
+      .two-col,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .hero { padding-top: 2.3rem; }
+      .nav-links { display: none; } /* simplify nav on small screens */
+      .nav-cta { gap: 0.4rem; }
+    }
+    @media (max-width: 600px) {
+      .container { padding: 0 1.1rem; }
+      .hero-inner { gap: 1.8rem; }
+      .hero-title { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-root">
+    <!-- HEADER -->
+    <header>
+      <div class="container navbar">
+        <div class="nav-left">
+          <div class="logo-icon">WTF</div>
+          <div class="logo-text">
+            <span>WHISKEY · TOBACCO · FIREARMS</span>
+            <span>MEMBERS CLUB</span>
+          </div>
+        </div>
+        <nav class="nav-links">
+          <button type="button" data-view="home" class="active">Home</button>
+          <button type="button" data-view="member">Member</button>
+          <button type="button" data-view="vendor">Vendor</button>
+        </nav>
+        <div class="nav-cta">
+          <button class="btn btn-outline" type="button" data-view="member">Member</button>
+          <button class="btn btn-primary" type="button" data-view="vendor">Partner sign-up</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ========== HOME VIEW (LANDING) ========== -->
+      <div id="view-home" class="view view-active">
+        <!-- HERO -->
+        <section class="hero">
+          <div class="container hero-inner">
+            <div>
+              <div class="eyebrow">Private membership · licensed partners only</div>
+              <h1 class="hero-title">
+                Exclusive access to cigars, whiskey, and firearms training from trusted businesses.
+              </h1>
+              <p class="hero-text">
+                Whiskey Tobacco Firearms (WTF) connects members with vetted cigar lounges, whiskey bars,
+                ranges, and certified firearms trainers. Members unlock in-person discounts using single-use
+                codes at legitimate shops only.
+              </p>
+              <div class="hero-actions">
+                <button class="btn btn-primary" type="button" data-view="member">Become a member</button>
+                <button class="btn btn-outline" type="button" data-view="vendor">Apply as a licensed partner</button>
+              </div>
+              <p class="hero-note">
+                <strong>No private sales.</strong> WTF does not broker firearm transfers, person-to-person
+                deals, or online alcohol sales. All offers are redeemed directly with licensed businesses
+                that follow federal, state, and local laws.
+              </p>
+            </div>
+            <aside class="hero-card">
+              <h2>How WTF works</h2>
+              <div class="pill-row">
+                <div class="pill">Subscribe</div>
+                <div class="pill">Discover</div>
+                <div class="pill">Scan &amp; Save</div>
+              </div>
+              <ul>
+                <li>
+                  <span class="bullet">•</span>
+                  <span><strong>Members</strong> join on a monthly or yearly plan to access in-person discounts.</span>
+                </li>
+                <li>
+                  <span class="bullet">•</span>
+                  <span><strong>Licensed businesses</strong> (FFL dealers, ranges, cigar lounges, bars, trainers) publish offers.</span>
+                </li>
+                <li>
+                  <span class="bullet">•</span>
+                  <span>Members generate a <strong>one-time voucher code</strong> in the app and present it at checkout.</span>
+                </li>
+                <li>
+                  <span class="bullet">•</span>
+                  <span>The vendor marks the code as used and applies the discount — screenshots cannot be reused.</span>
+                </li>
+              </ul>
+              <div class="hero-card-footer">
+                This single page is the foundation. Later, you connect a real database and QR scanner,
+                but you only ever update this one code file.
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="section">
+          <div class="container">
+            <h3 class="section-title">How it works</h3>
+            <div class="grid-3">
+              <div class="card">
+                <h4>1. Join as a WTF member</h4>
+                <p>Choose a monthly or yearly membership and complete age verification where required by law.</p>
+                <small>Members must follow all local, state, and federal regulations for alcohol and firearms.</small>
+              </div>
+              <div class="card">
+                <h4>2. Find nearby partners</h4>
+                <p>Use the WTF app to locate cigar lounges, whiskey bars, ranges, and certified instructors near you.</p>
+                <small>All firearm-related partners are licensed businesses — no private sellers.</small>
+              </div>
+              <div class="card">
+                <h4>3. Generate one-time vouchers</h4>
+                <p>Before checkout, generate a single-use code that your vendor checks and redeems.</p>
+                <small>Each code is tracked in the system and cannot be reused or resold.</small>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CATEGORIES -->
+        <section class="section">
+          <div class="container">
+            <h3 class="section-title">Categories we support</h3>
+            <div class="grid-3">
+              <div class="card">
+                <h4>Cigars &amp; lounges</h4>
+                <p>Premium cigar lounges and retailers with member-only promotions.</p>
+              </div>
+              <div class="card">
+                <h4>Whiskey &amp; spirits</h4>
+                <p>Whiskey bars, tasting rooms, and licensed bottle shops offering responsible deals.</p>
+              </div>
+              <div class="card">
+                <h4>Firearms training &amp; ranges</h4>
+                <p>Certified instructors, ranges, and FFL retailers offering discounts on training, range fees, and accessories — not private firearm sales.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PARTNERS + LEGAL -->
+        <section class="section">
+          <div class="container">
+            <h3 class="section-title">For licensed partners &amp; legal safety</h3>
+            <div class="two-col">
+              <div>
+                <p><strong>WTF is built for legitimate businesses.</strong></p>
+                <p>
+                  Cigar lounges, whiskey venues, ranges, certified instructors, and licensed firearms
+                  retailers can promote in-person offers to verified members. All firearm-related ads
+                  must come from licensed FFLs or ranges – never from private individuals.
+                </p>
+                <ul>
+                  <li>List locations, hours, and categories.</li>
+                  <li>Create trackable, one-time vouchers with your own rules.</li>
+                  <li>Check member codes at checkout and mark them used.</li>
+                  <li>Review basic redemption analytics.</li>
+                </ul>
+              </div>
+              <div class="policy-box">
+                <p><strong>Prohibited on WTF:</strong></p>
+                <ul>
+                  <li>Private firearm listings, trades, or “meet-up” deals.</li>
+                  <li>Sharing phone numbers, emails, or social handles to arrange off-platform sales.</li>
+                  <li>Any attempt to bypass background checks or legal transfer processes.</li>
+                </ul>
+                <p style="margin-top:0.6rem;">
+                  Reviews and comments (when added) will be monitored and may be removed if they appear to
+                  encourage illegal activity. Repeat violations can result in account or partner removal.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ========== MEMBER VIEW ========== -->
+      <div id="view-member" class="view">
+        <section class="sub-hero">
+          <div class="container">
+            <h1>Member area (demo)</h1>
+            <p>
+              This is a simple demo of how a member could generate a one-time voucher code to use in person.
+              Later you connect it to a real database and login system, but the concept stays the same.
+            </p>
+          </div>
+        </section>
+
+        <section class="sub-content">
+          <div class="container">
+            <h3 class="section-title">Generate a demo voucher</h3>
+            <div class="voucher-panel">
+              <p>
+                1. Select an example offer.  
+                2. Click “Generate voucher”.  
+                3. Imagine presenting the code to a licensed partner at checkout.
+              </p>
+
+              <div style="margin-top:0.8rem;">
+                <label for="offer-select" style="font-size:0.86rem;">Example offer:</label>
+                <select id="offer-select" style="margin-left:0.4rem; padding:0.3rem 0.4rem; border-radius:0.4rem; border:1px solid rgba(255,255,255,0.25); background:#050608; color:#f5f5f5; font-size:0.86rem;">
+                  <option value="CIGAR10">10% off cigar lounge tab</option>
+                  <option value="WHISKEY5">$5 off whiskey flight (dine-in)</option>
+                  <option value="TRAINING15">15% off firearms safety class</option>
+                </select>
+              </div>
+
+              <div style="margin-top:0.8rem;">
+                <button class="btn btn-primary" id="btn-generate" type="button">Generate voucher</button>
+              </div>
+
+              <div id="voucher-display" style="display:none;">
+                <div class="voucher-code-box" id="voucher-code-box"></div>
+                <div class="voucher-status" id="voucher-status"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ========== VENDOR VIEW ========== -->
+      <div id="view-vendor" class="view">
+        <section class="sub-hero">
+          <div class="container">
+            <h1>Vendor / partner area (demo)</h1>
+            <p>
+              This shows how a licensed partner might check a member’s code and mark it used. In the real app,
+              this would be backed by a database and only available to vetted, legitimate businesses
+              (FFL dealers, ranges, lounges, etc. — never private sellers).
+            </p>
+          </div>
+        </section>
+
+        <section class="sub-content">
+          <div class="container">
+            <h3 class="section-title">Demo: check a voucher code</h3>
+            <div class="voucher-panel">
+              <p>
+                In production, you would scan a QR or barcode. Here we just type or paste a code.  
+                For demo purposes, when you redeem a code here it will be treated as “used”.
+              </p>
+
+              <div class="input-row">
+                <input id="vendor-code-input" type="text" placeholder="Paste voucher code here" />
+                <button class="btn btn-primary" id="btn-redeem" type="button">Mark as redeemed (demo)</button>
+              </div>
+
+              <div class="voucher-status" id="vendor-status" style="margin-top:0.8rem;"></div>
+
+              <p style="margin-top:1rem; font-size:0.8rem; color:rgba(245,245,245,0.75);">
+                In the real system, this check would run on the server, tied to a database record.  
+                Once a code is marked used, it cannot be used again – even if someone screenshots it.
+              </p>
+            </div>
+
+            <section class="section" style="border-top:none; padding-top:2rem;">
+              <h3 class="section-title">Partner rules (summary)</h3>
+              <div class="two-col">
+                <div>
+                  <ul>
+                    <li>Only licensed businesses can advertise firearms-related services or accessories.</li>
+                    <li>No private or person-to-person firearm sales are allowed on WTF.</li>
+                    <li>All alcohol and firearms offers must follow all applicable laws and age restrictions.</li>
+                  </ul>
+                </div>
+                <div class="policy-box">
+                  <strong>Important:</strong>
+                  <p style="margin-top:0.4rem;">
+                    WTF is a membership and marketing platform only. It does not sell firearms, ammunition,
+                    or alcohol and does not broker transfers or private sales between individuals.
+                  </p>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container footer-inner">
+        <div>© <span id="year"></span> Whiskey Tobacco Firearms, LLC. All rights reserved.</div>
+        <div>WTF does not facilitate private sales of firearms or alcohol.</div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Set year in footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // ----- SIMPLE VIEW SWITCHING (Home / Member / Vendor) -----
+    const navButtons = document.querySelectorAll("[data-view]");
+    const views = {
+      home: document.getElementById("view-home"),
+      member: document.getElementById("view-member"),
+      vendor: document.getElementById("view-vendor")
+    };
+
+    function switchView(viewName) {
+      Object.keys(views).forEach((name) => {
+        if (name === viewName) {
+          views[name].classList.add("view-active");
+        } else {
+          views[name].classList.remove("view-active");
+        }
+      });
+
+      document.querySelectorAll(".nav-links button").forEach((btn) => {
+        btn.classList.toggle("active", btn.getAttribute("data-view") === viewName);
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    navButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const view = btn.getAttribute("data-view");
+        if (views[view]) switchView(view);
+      });
+    });
+
+    // ----- DEMO VOUCHER GENERATION (Member side) -----
+    let currentVoucherCode = null;
+    let voucherUsed = false;
+
+    function createVoucherCode() {
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      let out = "";
+      for (let i = 0; i < 10; i++) {
+        out += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return out;
+    }
+
+    const btnGenerate = document.getElementById("btn-generate");
+    const voucherDisplay = document.getElementById("voucher-display");
+    const voucherBox = document.getElementById("voucher-code-box");
+    const voucherStatus = document.getElementById("voucher-status");
+
+    if (btnGenerate) {
+      btnGenerate.addEventListener("click", () => {
+        const offerId = document.getElementById("offer-select").value;
+        currentVoucherCode = createVoucherCode();
+        voucherUsed = false;
+
+        voucherBox.textContent = currentVoucherCode;
+        voucherStatus.innerHTML =
+          "Offer: <strong>" +
+          offerId +
+          "</strong> · Status: <strong>Active (not yet redeemed)</strong>";
+        voucherDisplay.style.display = "block";
+      });
+    }
+
+    // ----- DEMO REDEEM (Vendor side) -----
+    const vendorInput = document.getElementById("vendor-code-input");
+    const btnRedeem = document.getElementById("btn-redeem");
+    const vendorStatus = document.getElementById("vendor-status");
+
+    if (btnRedeem) {
+      btnRedeem.addEventListener("click", () => {
+        const entered = (vendorInput.value || "").trim().toUpperCase();
+        if (!entered) {
+          vendorStatus.textContent = "Please enter a voucher code.";
+          return;
+        }
+
+        if (!currentVoucherCode) {
+          vendorStatus.textContent =
+            "Demo info: No voucher has been generated in this browser yet.";
+          return;
+        }
+
+        if (entered !== currentVoucherCode) {
+          vendorStatus.textContent =
+            "Code not recognized in this demo. In production, this would check a real database.";
+          return;
+        }
+
+        if (voucherUsed) {
+          vendorStatus.innerHTML =
+            "This voucher is already marked as <span class='used'>USED</span> (cannot redeem again).";
+          return;
+        }
+
+        voucherUsed = true;
+        vendorStatus.innerHTML =
+          "Voucher <strong>" +
+          currentVoucherCode +
+          "</strong> marked as <span class='used'>USED</span> (demo only).";
+
+        if (voucherStatus) {
+          voucherStatus.innerHTML =
+            "Status: <span class='used'>USED (single-use enforced in real system)</span>";
+        }
+      });
+    }
+  </script>
+</body>
+</html>
