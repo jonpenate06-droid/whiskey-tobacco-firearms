@@ -9,7 +9,6 @@
     content="Whiskey Tobacco Firearms (WTF) – private membership club for cigars, whiskey and firearms-related training from licensed businesses only. No private sellers."
   />
   <style>
-    /* -------- RESET / BASE -------- */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -23,7 +22,6 @@
     .page-root { min-height: 100vh; display: flex; flex-direction: column; }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
 
-    /* -------- HEADER / NAV -------- */
     header {
       border-bottom: 1px solid rgba(255,255,255,0.08);
       position: sticky;
@@ -71,6 +69,7 @@
       opacity: 0.7;
       letter-spacing: 0.12em;
     }
+
     .nav-links {
       display: flex;
       gap: 1.2rem;
@@ -89,12 +88,19 @@
       border-bottom: 2px solid #c58b3a;
       padding-bottom: 0.1rem;
     }
+
     .nav-cta {
       display: flex;
       gap: 0.75rem;
+      align-items: center;
+    }
+    .nav-user {
+      font-size: 0.78rem;
+      color: rgba(245,245,245,0.7);
+      max-width: 160px;
+      text-align: right;
     }
 
-    /* -------- BUTTONS -------- */
     .btn {
       border-radius: 999px;
       padding: 0.5rem 1.1rem;
@@ -121,10 +127,7 @@
     .btn-outline:hover { border-color: #c58b3a; }
     .btn-primary:hover { filter: brightness(1.05); }
 
-    /* -------- COMMON SECTIONS -------- */
-    .hero {
-      padding: 3rem 0 2.4rem;
-    }
+    .hero { padding: 3rem 0 2.4rem; }
     .hero-inner {
       display: grid;
       grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
@@ -238,10 +241,7 @@
                   #050608;
       font-size: 0.86rem;
     }
-    .card h4 {
-      font-size: 0.9rem;
-      margin-bottom: 0.4rem;
-    }
+    .card h4 { font-size: 0.9rem; margin-bottom: 0.4rem; }
     .card p {
       font-size: 0.83rem;
       color: rgba(245,245,245,0.82);
@@ -252,6 +252,7 @@
       font-size: 0.74rem;
       color: rgba(245,245,245,0.7);
     }
+
     .two-col {
       display: grid;
       grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
@@ -274,17 +275,11 @@
     }
     .policy-box strong { color: #f8e3c0; }
 
-    /* -------- SUBPAGES (MEMBER / VENDOR) -------- */
     .view { display: none; }
     .view-active { display: block; }
 
-    .sub-hero {
-      padding: 2.5rem 0 1.2rem;
-    }
-    .sub-hero h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.4rem;
-    }
+    .sub-hero { padding: 2.5rem 0 1.2rem; }
+    .sub-hero h1 { font-size: 1.8rem; margin-bottom: 0.4rem; }
     .sub-hero p {
       max-width: 40rem;
       color: rgba(245,245,245,0.85);
@@ -305,7 +300,8 @@
       padding: 0.9rem;
       border-radius: 0.6rem;
       border: 1px dashed rgba(255,255,255,0.3);
-      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
       text-align: center;
       letter-spacing: 0.18em;
       font-size: 0.9rem;
@@ -335,7 +331,41 @@
       font-size: 0.86rem;
     }
 
-    /* -------- FOOTER -------- */
+    .auth-panel {
+      margin-top: 1.2rem;
+      border-radius: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 1rem;
+      background: #050608;
+      font-size: 0.85rem;
+    }
+    .auth-panel h3 {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    .auth-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+      align-items: center;
+    }
+    .auth-row input {
+      flex: 1;
+      min-width: 150px;
+      padding: 0.4rem 0.6rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: #050608;
+      color: #f5f5f5;
+      font-size: 0.86rem;
+    }
+    .auth-note {
+      margin-top: 0.5rem;
+      font-size: 0.78rem;
+      color: rgba(245,245,245,0.75);
+    }
+
     footer {
       border-top: 1px solid rgba(255,255,255,0.08);
       padding: 1.3rem 0 2rem;
@@ -350,7 +380,8 @@
       gap: 0.8rem;
     }
 
-    /* -------- RESPONSIVE -------- */
+    .hidden { display: none !important; }
+
     @media (max-width: 900px) {
       .hero-inner,
       .two-col,
@@ -358,8 +389,9 @@
         grid-template-columns: 1fr;
       }
       .hero { padding-top: 2.3rem; }
-      .nav-links { display: none; } /* simplify nav on small screens */
+      .nav-links { display: none; }
       .nav-cta { gap: 0.4rem; }
+      .nav-user { display: none; }
     }
     @media (max-width: 600px) {
       .container { padding: 0 1.1rem; }
@@ -386,16 +418,16 @@
           <button type="button" data-view="vendor">Vendor</button>
         </nav>
         <div class="nav-cta">
+          <div id="nav-user" class="nav-user"></div>
           <button class="btn btn-outline" type="button" data-view="member">Member</button>
-          <button class="btn btn-primary" type="button" data-view="vendor">Partner sign-up</button>
+          <button class="btn btn-primary" type="button" data-view="vendor">Partner</button>
         </div>
       </div>
     </header>
 
     <main>
-      <!-- ========== HOME VIEW (LANDING) ========== -->
+      <!-- HOME VIEW -->
       <div id="view-home" class="view view-active">
-        <!-- HERO -->
         <section class="hero">
           <div class="container hero-inner">
             <div>
@@ -432,7 +464,7 @@
                 </li>
                 <li>
                   <span class="bullet">•</span>
-                  <span><strong>Licensed businesses</strong> (FFL dealers, ranges, cigar lounges, bars, trainers) publish offers.</span>
+                  <span><strong>Licensed businesses</strong> publish offers (no private sellers).</span>
                 </li>
                 <li>
                   <span class="bullet">•</span>
@@ -444,59 +476,34 @@
                 </li>
               </ul>
               <div class="hero-card-footer">
-                This single page is the foundation. Later, you connect a real database and QR scanner,
-                but you only ever update this one code file.
+                This page is now wired to Supabase authentication. Next steps:
+                connect a real database for vouchers and vendor listings.
               </div>
             </aside>
           </div>
         </section>
 
-        <!-- HOW IT WORKS -->
         <section class="section">
           <div class="container">
             <h3 class="section-title">How it works</h3>
             <div class="grid-3">
               <div class="card">
                 <h4>1. Join as a WTF member</h4>
-                <p>Choose a monthly or yearly membership and complete age verification where required by law.</p>
-                <small>Members must follow all local, state, and federal regulations for alcohol and firearms.</small>
+                <p>Sign up with email or Google. Membership levels will be added later.</p>
+                <small>Members must follow all local, state, and federal regulations.</small>
               </div>
               <div class="card">
                 <h4>2. Find nearby partners</h4>
-                <p>Use the WTF app to locate cigar lounges, whiskey bars, ranges, and certified instructors near you.</p>
-                <small>All firearm-related partners are licensed businesses — no private sellers.</small>
+                <p>Later we will add a map and search system similar to Yelp or Groupon.</p>
               </div>
               <div class="card">
                 <h4>3. Generate one-time vouchers</h4>
-                <p>Before checkout, generate a single-use code that your vendor checks and redeems.</p>
-                <small>Each code is tracked in the system and cannot be reused or resold.</small>
+                <p>Once the database is connected, vouchers will be stored and marked used once redeemed.</p>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- CATEGORIES -->
-        <section class="section">
-          <div class="container">
-            <h3 class="section-title">Categories we support</h3>
-            <div class="grid-3">
-              <div class="card">
-                <h4>Cigars &amp; lounges</h4>
-                <p>Premium cigar lounges and retailers with member-only promotions.</p>
-              </div>
-              <div class="card">
-                <h4>Whiskey &amp; spirits</h4>
-                <p>Whiskey bars, tasting rooms, and licensed bottle shops offering responsible deals.</p>
-              </div>
-              <div class="card">
-                <h4>Firearms training &amp; ranges</h4>
-                <p>Certified instructors, ranges, and FFL retailers offering discounts on training, range fees, and accessories — not private firearm sales.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- PARTNERS + LEGAL -->
         <section class="section">
           <div class="container">
             <h3 class="section-title">For licensed partners &amp; legal safety</h3>
@@ -519,12 +526,12 @@
                 <p><strong>Prohibited on WTF:</strong></p>
                 <ul>
                   <li>Private firearm listings, trades, or “meet-up” deals.</li>
-                  <li>Sharing phone numbers, emails, or social handles to arrange off-platform sales.</li>
+                  <li>Sharing contact info to arrange off-platform sales.</li>
                   <li>Any attempt to bypass background checks or legal transfer processes.</li>
                 </ul>
                 <p style="margin-top:0.6rem;">
-                  Reviews and comments (when added) will be monitored and may be removed if they appear to
-                  encourage illegal activity. Repeat violations can result in account or partner removal.
+                  Reviews and comments (when added) may be removed if they appear to encourage illegal
+                  activity. Repeat violations can result in account or partner removal.
                 </p>
               </div>
             </div>
@@ -532,59 +539,97 @@
         </section>
       </div>
 
-      <!-- ========== MEMBER VIEW ========== -->
+      <!-- MEMBER VIEW -->
       <div id="view-member" class="view">
         <section class="sub-hero">
           <div class="container">
-            <h1>Member area (demo)</h1>
+            <h1>Member area</h1>
             <p>
-              This is a simple demo of how a member could generate a one-time voucher code to use in person.
-              Later you connect it to a real database and login system, but the concept stays the same.
+              Sign in or create an account using email or Google. Once signed in,
+              you will see demo voucher tools. Later, this area will include maps,
+              saved offers, and full voucher history.
             </p>
           </div>
         </section>
 
         <section class="sub-content">
           <div class="container">
-            <h3 class="section-title">Generate a demo voucher</h3>
-            <div class="voucher-panel">
-              <p>
-                1. Select an example offer.  
-                2. Click “Generate voucher”.  
-                3. Imagine presenting the code to a licensed partner at checkout.
+            <!-- AUTH PANEL -->
+            <div class="auth-panel" id="auth-logged-out">
+              <h3>Sign in or create an account</h3>
+              <div class="auth-row">
+                <input id="auth-email" type="email" placeholder="Email address" />
+                <input id="auth-password" type="password" placeholder="Password" />
+              </div>
+              <div class="auth-row" style="margin-top:0.6rem;">
+                <button class="btn btn-primary" id="btn-email-login" type="button">
+                  Email sign in / sign up
+                </button>
+                <button class="btn btn-outline" id="btn-google" type="button">
+                  Continue with Google
+                </button>
+              </div>
+              <div class="auth-note" id="auth-message"></div>
+            </div>
+
+            <div class="auth-panel hidden" id="auth-logged-in">
+              <h3>Signed in</h3>
+              <div class="auth-note">
+                Logged in as <strong><span id="auth-user-email"></span></strong>.
+              </div>
+              <div class="auth-row" style="margin-top:0.8rem;">
+                <button class="btn btn-outline" id="btn-signout" type="button">
+                  Sign out
+                </button>
+              </div>
+            </div>
+
+            <!-- MEMBER CONTENT: ONLY WHEN LOGGED IN -->
+            <div id="member-content" class="hidden">
+              <h3 class="section-title" style="margin-top:2rem;">Generate a demo voucher</h3>
+              <div class="voucher-panel">
+                <p>
+                  1. Select an example offer.  
+                  2. Click “Generate voucher”.  
+                  3. Present the code to a licensed partner at checkout (demo).
+                </p>
+
+                <div style="margin-top:0.8rem;">
+                  <label for="offer-select" style="font-size:0.86rem;">Example offer:</label>
+                  <select id="offer-select" style="margin-left:0.4rem; padding:0.3rem 0.4rem; border-radius:0.4rem; border:1px solid rgba(255,255,255,0.25); background:#050608; color:#f5f5f5; font-size:0.86rem;">
+                    <option value="CIGAR10">10% off cigar lounge tab</option>
+                    <option value="WHISKEY5">$5 off whiskey flight (dine-in)</option>
+                    <option value="TRAINING15">15% off firearms safety class</option>
+                  </select>
+                </div>
+
+                <div style="margin-top:0.8rem;">
+                  <button class="btn btn-primary" id="btn-generate" type="button">Generate voucher</button>
+                </div>
+
+                <div id="voucher-display" style="display:none;">
+                  <div class="voucher-code-box" id="voucher-code-box"></div>
+                  <div class="voucher-status" id="voucher-status"></div>
+                </div>
+              </div>
+              <p class="auth-note" style="margin-top:1rem;">
+                In future versions, voucher codes will be stored in Supabase with status
+                “unused” or “redeemed” so they can only be used once.
               </p>
-
-              <div style="margin-top:0.8rem;">
-                <label for="offer-select" style="font-size:0.86rem;">Example offer:</label>
-                <select id="offer-select" style="margin-left:0.4rem; padding:0.3rem 0.4rem; border-radius:0.4rem; border:1px solid rgba(255,255,255,0.25); background:#050608; color:#f5f5f5; font-size:0.86rem;">
-                  <option value="CIGAR10">10% off cigar lounge tab</option>
-                  <option value="WHISKEY5">$5 off whiskey flight (dine-in)</option>
-                  <option value="TRAINING15">15% off firearms safety class</option>
-                </select>
-              </div>
-
-              <div style="margin-top:0.8rem;">
-                <button class="btn btn-primary" id="btn-generate" type="button">Generate voucher</button>
-              </div>
-
-              <div id="voucher-display" style="display:none;">
-                <div class="voucher-code-box" id="voucher-code-box"></div>
-                <div class="voucher-status" id="voucher-status"></div>
-              </div>
             </div>
           </div>
         </section>
       </div>
 
-      <!-- ========== VENDOR VIEW ========== -->
+      <!-- VENDOR VIEW -->
       <div id="view-vendor" class="view">
         <section class="sub-hero">
           <div class="container">
             <h1>Vendor / partner area (demo)</h1>
             <p>
-              This shows how a licensed partner might check a member’s code and mark it used. In the real app,
-              this would be backed by a database and only available to vetted, legitimate businesses
-              (FFL dealers, ranges, lounges, etc. — never private sellers).
+              This shows how a licensed partner might check a member’s code and mark it used.
+              In the full system this will require a vendor account and will be backed by
+              the database to enforce one-time use.
             </p>
           </div>
         </section>
@@ -594,20 +639,22 @@
             <h3 class="section-title">Demo: check a voucher code</h3>
             <div class="voucher-panel">
               <p>
-                In production, you would scan a QR or barcode. Here we just type or paste a code.  
-                For demo purposes, when you redeem a code here it will be treated as “used”.
+                In production, you will scan a QR or barcode. Here we just type or paste a code.  
+                When you redeem a code here it will be treated as “used” in this browser session.
               </p>
 
               <div class="input-row">
                 <input id="vendor-code-input" type="text" placeholder="Paste voucher code here" />
-                <button class="btn btn-primary" id="btn-redeem" type="button">Mark as redeemed (demo)</button>
+                <button class="btn btn-primary" id="btn-redeem" type="button">
+                  Mark as redeemed (demo)
+                </button>
               </div>
 
               <div class="voucher-status" id="vendor-status" style="margin-top:0.8rem;"></div>
 
               <p style="margin-top:1rem; font-size:0.8rem; color:rgba(245,245,245,0.75);">
-                In the real system, this check would run on the server, tied to a database record.  
-                Once a code is marked used, it cannot be used again – even if someone screenshots it.
+                In the real system, this check will run on the server, tied to a voucher table in Supabase.
+                Once a code is marked used, it cannot be redeemed again – even if someone screenshots it.
               </p>
             </div>
 
@@ -618,7 +665,7 @@
                   <ul>
                     <li>Only licensed businesses can advertise firearms-related services or accessories.</li>
                     <li>No private or person-to-person firearm sales are allowed on WTF.</li>
-                    <li>All alcohol and firearms offers must follow all applicable laws and age restrictions.</li>
+                    <li>All alcohol and firearms offers must follow applicable laws and age restrictions.</li>
                   </ul>
                 </div>
                 <div class="policy-box">
@@ -635,7 +682,6 @@
       </div>
     </main>
 
-    <!-- FOOTER -->
     <footer>
       <div class="container footer-inner">
         <div>© <span id="year"></span> Whiskey Tobacco Firearms, LLC. All rights reserved.</div>
@@ -644,41 +690,144 @@
     </footer>
   </div>
 
-  <script>
-    // Set year in footer
+  <!-- Supabase + app logic -->
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    // Your real Supabase project values
+    const SUPABASE_URL = "https://ztospksseftjupuuwtoa.supabase.co";
+    const SUPABASE_ANON_KEY =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0b3Nwa3NzZWZ0anVwdXV3dG9hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ0Mzg0MTYsImV4cCI6MjA4MDAxNDQxNn0.Dvec8LfAUliX06yLs69PCQwMjjTWPYKnYuNBJn3t20U";
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Footer year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // ----- SIMPLE VIEW SWITCHING (Home / Member / Vendor) -----
-    const navButtons = document.querySelectorAll("[data-view]");
+    // ----- VIEW SWITCHING -----
     const views = {
       home: document.getElementById("view-home"),
       member: document.getElementById("view-member"),
       vendor: document.getElementById("view-vendor")
     };
-
+    const navButtons = document.querySelectorAll("[data-view]");
     function switchView(viewName) {
       Object.keys(views).forEach((name) => {
-        if (name === viewName) {
-          views[name].classList.add("view-active");
-        } else {
-          views[name].classList.remove("view-active");
-        }
+        if (name === viewName) views[name].classList.add("view-active");
+        else views[name].classList.remove("view-active");
       });
-
       document.querySelectorAll(".nav-links button").forEach((btn) => {
         btn.classList.toggle("active", btn.getAttribute("data-view") === viewName);
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-
     navButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
-        const view = btn.getAttribute("data-view");
-        if (views[view]) switchView(view);
+        const v = btn.getAttribute("data-view");
+        if (views[v]) switchView(v);
       });
     });
 
-    // ----- DEMO VOUCHER GENERATION (Member side) -----
+    // ----- AUTH UI -----
+    const navUser = document.getElementById("nav-user");
+    const authLoggedOut = document.getElementById("auth-logged-out");
+    const authLoggedIn = document.getElementById("auth-logged-in");
+    const authUserEmail = document.getElementById("auth-user-email");
+    const authMessage = document.getElementById("auth-message");
+    const memberContent = document.getElementById("member-content");
+
+    function setAuthMessage(msg) {
+      authMessage.textContent = msg || "";
+    }
+
+    function updateAuthUI(session) {
+      const user = session ? session.user : null;
+
+      if (user) {
+        authLoggedOut.classList.add("hidden");
+        authLoggedIn.classList.remove("hidden");
+        memberContent.classList.remove("hidden");
+        authUserEmail.textContent = user.email || "(no email)";
+        if (navUser) navUser.textContent = user.email || "";
+      } else {
+        authLoggedOut.classList.remove("hidden");
+        authLoggedIn.classList.add("hidden");
+        memberContent.classList.add("hidden");
+        authUserEmail.textContent = "";
+        if (navUser) navUser.textContent = "";
+      }
+    }
+
+    // Initial session
+    (async () => {
+      const { data } = await supabase.auth.getSession();
+      updateAuthUI(data.session || null);
+    })();
+
+    // Auth state changes
+    supabase.auth.onAuthStateChange((_event, session) => {
+      updateAuthUI(session);
+    });
+
+    // ----- AUTH ACTIONS -----
+    const emailInput = document.getElementById("auth-email");
+    const passwordInput = document.getElementById("auth-password");
+    const btnEmailLogin = document.getElementById("btn-email-login");
+    const btnGoogle = document.getElementById("btn-google");
+    const btnSignout = document.getElementById("btn-signout");
+
+    if (btnEmailLogin) {
+      btnEmailLogin.addEventListener("click", async () => {
+        const email = (emailInput.value || "").trim();
+        const password = (passwordInput.value || "").trim();
+
+        if (!email || !password) {
+          setAuthMessage("Enter email and password.");
+          return;
+        }
+
+        setAuthMessage("Checking account…");
+
+        // Try sign-in first
+        let { error } = await supabase.auth.signInWithPassword({ email, password });
+
+        if (error && error.message.includes("Invalid login credentials")) {
+          // If sign-in fails, attempt sign-up
+          const { error: signUpError } = await supabase.auth.signUp({ email, password });
+          if (signUpError) {
+            setAuthMessage("Sign up failed: " + signUpError.message);
+          } else {
+            setAuthMessage("Sign up successful. Check your email if confirmation is required, then sign in.");
+          }
+        } else if (error) {
+          setAuthMessage("Sign in failed: " + error.message);
+        } else {
+          setAuthMessage("");
+        }
+      });
+    }
+
+    if (btnGoogle) {
+      btnGoogle.addEventListener("click", async () => {
+        setAuthMessage("Redirecting to Google…");
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: "google",
+          options: {
+            redirectTo: window.location.origin
+          }
+        });
+        if (error) setAuthMessage("Google sign-in failed: " + error.message);
+      });
+    }
+
+    if (btnSignout) {
+      btnSignout.addEventListener("click", async () => {
+        await supabase.auth.signOut();
+        setAuthMessage("");
+      });
+    }
+
+    // ----- DEMO VOUCHER GENERATION -----
     let currentVoucherCode = null;
     let voucherUsed = false;
 
@@ -704,14 +853,13 @@
 
         voucherBox.textContent = currentVoucherCode;
         voucherStatus.innerHTML =
-          "Offer: <strong>" +
-          offerId +
+          "Offer: <strong>" + offerId +
           "</strong> · Status: <strong>Active (not yet redeemed)</strong>";
         voucherDisplay.style.display = "block";
       });
     }
 
-    // ----- DEMO REDEEM (Vendor side) -----
+    // ----- DEMO REDEEM (VENDOR SIDE) -----
     const vendorInput = document.getElementById("vendor-code-input");
     const btnRedeem = document.getElementById("btn-redeem");
     const vendorStatus = document.getElementById("vendor-status");
@@ -723,34 +871,28 @@
           vendorStatus.textContent = "Please enter a voucher code.";
           return;
         }
-
         if (!currentVoucherCode) {
           vendorStatus.textContent =
             "Demo info: No voucher has been generated in this browser yet.";
           return;
         }
-
         if (entered !== currentVoucherCode) {
           vendorStatus.textContent =
-            "Code not recognized in this demo. In production, this would check a real database.";
+            "Code not recognized in this demo. In production, this would check Supabase.";
           return;
         }
-
         if (voucherUsed) {
           vendorStatus.innerHTML =
             "This voucher is already marked as <span class='used'>USED</span> (cannot redeem again).";
           return;
         }
-
         voucherUsed = true;
         vendorStatus.innerHTML =
-          "Voucher <strong>" +
-          currentVoucherCode +
+          "Voucher <strong>" + currentVoucherCode +
           "</strong> marked as <span class='used'>USED</span> (demo only).";
-
         if (voucherStatus) {
           voucherStatus.innerHTML =
-            "Status: <span class='used'>USED (single-use enforced in real system)</span>";
+            "Status: <span class='used'>USED (single-use enforced in database in production)</span>";
         }
       });
     }
