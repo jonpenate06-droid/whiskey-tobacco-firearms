@@ -690,11 +690,11 @@
     </footer>
   </div>
 
-  <!-- Supabase + app logic -->
+    <!-- Supabase + app logic -->
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-    // Your real Supabase project values
+    // Your Supabase project
     const SUPABASE_URL = "https://ztospksseftjupuuwtoa.supabase.co";
     const SUPABASE_ANON_KEY =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0b3Nwa3NzZWZ0anVwdXV3dG9hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ0Mzg0MTYsImV4cCI6MjA4MDAxNDQxNn0.Dvec8LfAUliX06yLs69PCQwMjjTWPYKnYuNBJn3t20U";
@@ -708,9 +708,10 @@
     const views = {
       home: document.getElementById("view-home"),
       member: document.getElementById("view-member"),
-      vendor: document.getElementById("view-vendor")
+      vendor: document.getElementById("view-vendor"),
     };
     const navButtons = document.querySelectorAll("[data-view]");
+
     function switchView(viewName) {
       Object.keys(views).forEach((name) => {
         if (name === viewName) views[name].classList.add("view-active");
@@ -721,6 +722,7 @@
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+
     navButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
         const v = btn.getAttribute("data-view");
@@ -736,6 +738,8 @@
     const authMessage = document.getElementById("auth-message");
     const memberContent = document.getElementById("member-content");
 
+    let currentUserEmail = null; // used for vouchers
+
     function setAuthMessage(msg) {
       authMessage.textContent = msg || "";
     }
@@ -744,12 +748,14 @@
       const user = session ? session.user : null;
 
       if (user) {
+        currentUserEmail = user.email || null;
         authLoggedOut.classList.add("hidden");
         authLoggedIn.classList.remove("hidden");
         memberContent.classList.remove("hidden");
-        authUserEmail.textContent = user.email || "(no email)";
-        if (navUser) navUser.textContent = user.email || "";
+        authUserEmail.textContent = currentUserEmail || "(no email)";
+        if (navUser) navUser.textContent = currentUserEmail || "";
       } else {
+        currentUserEmail = null;
         authLoggedOut.classList.remove("hidden");
         authLoggedIn.classList.add("hidden");
         memberContent.classList.add("hidden");
@@ -760,8 +766,11 @@
 
     // Initial session
     (async () => {
-      const { data } = await supabase.auth.getSession();
-      updateAuthUI(data.session || null);
+      const { data, error } = await supabase.auth.getSession();
+      if (error) {
+        console.error("Error getting session:", error);
+      }
+      updateAuthUI(data?.session || null);
     })();
 
     // Auth state changes
@@ -791,7 +800,7 @@
         // Try sign-in first
         let { error } = await supabase.auth.signInWithPassword({ email, password });
 
-        if (error && error.message.includes("Invalid login credentials")) {
+        if (error && error.message?.includes("Invalid login credentials")) {
           // If sign-in fails, attempt sign-up
           const { error: signUpError } = await supabase.auth.signUp({ email, password });
           if (signUpError) {
@@ -813,8 +822,8 @@
         const { error } = await supabase.auth.signInWithOAuth({
           provider: "google",
           options: {
-            redirectTo: window.location.origin
-          }
+            redirectTo: window.location.origin,
+          },
         });
         if (error) setAuthMessage("Google sign-in failed: " + error.message);
       });
@@ -827,9 +836,9 @@
       });
     }
 
-    // ----- DEMO VOUCHER GENERATION -----
+    // ----- DEMO VOUCHER GENERATION (NOW USING SUPABASE) -----
     let currentVoucherCode = null;
-    let voucherUsed = false;
+    let voucherUsedLocally = false;
 
     function createVoucherCode() {
       const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -846,53 +855,129 @@
     const voucherStatus = document.getElementById("voucher-status");
 
     if (btnGenerate) {
-      btnGenerate.addEventListener("click", () => {
-        const offerId = document.getElementById("offer-select").value;
-        currentVoucherCode = createVoucherCode();
-        voucherUsed = false;
+      btnGenerate.addEventListener("click", async () => {
+        if (!currentUserEmail) {
+          setAuthMessage("You must be signed in to generate a voucher.");
+          switchView("member");
+          return;
+        }
 
-        voucherBox.textContent = currentVoucherCode;
+        const offerSelect = document.getElementById("offer-select");
+        const offerId = offerSelect ? offerSelect.value : "UNKNOWN";
+
+        const code = createVoucherCode();
+
+        // Save voucher to Supabase
+        const { data, error } = await supabase
+          .from("vouchers")
+          .insert({
+            code,
+            offer_label: offerId,
+            member_email: currentUserEmail,
+          })
+          .select()
+          .single();
+
+        if (error) {
+          console.error("Error creating voucher:", error);
+          if (voucherStatus) {
+            voucherStatus.textContent =
+              "There was a problem creating your voucher. Please try again.";
+          }
+          return;
+        }
+
+        currentVoucherCode = data.code;
+        voucherUsedLocally = false;
+
+        voucherBox.textContent = data.code;
         voucherStatus.innerHTML =
-          "Offer: <strong>" + offerId +
-          "</strong> · Status: <strong>Active (not yet redeemed)</strong>";
+          "Offer: <strong>" +
+          data.offer_label +
+          "</strong> · Status: <strong>Active (not yet redeemed)</strong><br/>" +
+          "Generated for: <strong>" +
+          data.member_email +
+          "</strong>";
         voucherDisplay.style.display = "block";
       });
     }
 
-    // ----- DEMO REDEEM (VENDOR SIDE) -----
+    // ----- VENDOR REDEEM (SUPABASE-BACKED) -----
     const vendorInput = document.getElementById("vendor-code-input");
     const btnRedeem = document.getElementById("btn-redeem");
     const vendorStatus = document.getElementById("vendor-status");
 
     if (btnRedeem) {
-      btnRedeem.addEventListener("click", () => {
+      btnRedeem.addEventListener("click", async () => {
         const entered = (vendorInput.value || "").trim().toUpperCase();
         if (!entered) {
           vendorStatus.textContent = "Please enter a voucher code.";
           return;
         }
-        if (!currentVoucherCode) {
+
+        vendorStatus.textContent = "Checking code…";
+
+        // Look up voucher in Supabase
+        const { data: voucher, error } = await supabase
+          .from("vouchers")
+          .select("*")
+          .eq("code", entered)
+          .maybeSingle();
+
+        if (error) {
+          console.error("Error looking up voucher:", error);
           vendorStatus.textContent =
-            "Demo info: No voucher has been generated in this browser yet.";
+            "There was a problem checking this code. Please try again.";
           return;
         }
-        if (entered !== currentVoucherCode) {
+
+        if (!voucher) {
           vendorStatus.textContent =
-            "Code not recognized in this demo. In production, this would check Supabase.";
+            "Code not found. Member may not have generated a valid voucher.";
           return;
         }
-        if (voucherUsed) {
+
+        if (voucher.status === "redeemed") {
           vendorStatus.innerHTML =
-            "This voucher is already marked as <span class='used'>USED</span> (cannot redeem again).";
+            "This voucher is already marked as <span class='used'>USED</span> and cannot be redeemed again." +
+            (voucher.redeemed_at
+              ? " Redeemed at: " + new Date(voucher.redeemed_at).toLocaleString()
+              : "");
           return;
         }
-        voucherUsed = true;
+
+        // Mark as redeemed
+        const { data: updated, error: updError } = await supabase
+          .from("vouchers")
+          .update({
+            status: "redeemed",
+            redeemed_at: new Date().toISOString(),
+          })
+          .eq("code", entered)
+          .select()
+          .single();
+
+        if (updError) {
+          console.error("Error redeeming voucher:", updError);
+          vendorStatus.textContent =
+            "There was a problem marking this code as redeemed. Please try again.";
+          return;
+        }
+
         vendorStatus.innerHTML =
-          "Voucher <strong>" + currentVoucherCode +
-          "</strong> marked as <span class='used'>USED</span> (demo only).";
-        if (voucherStatus) {
-          voucherStatus.innerHTML =
-            "Status: <span class='used'>USED (single-use enforced in database in production)</span>";
+          "Voucher <strong>" +
+          updated.code +
+          "</strong> marked as <span class='used'>USED</span> for <strong>" +
+          updated.member_email +
+          "</strong>.";
+
+        // Keep local UI consistent if this was the current member voucher
+        if (currentVoucherCode && entered === currentVoucherCode) {
+          voucherUsedLocally = true;
+          if (voucherStatus) {
+            voucherStatus.innerHTML =
+              "Status: <span class='used'>USED (one-time voucher, now redeemed)</span>";
+          }
         }
       });
     }
