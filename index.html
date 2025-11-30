@@ -267,6 +267,50 @@
       color: rgba(245,245,245,0.75);
     }
 
+    /* Vendors directory */
+    .vendors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+    .vendor-meta {
+      font-size: 0.8rem;
+      color: rgba(245,245,245,0.8);
+      margin-top: 0.1rem;
+    }
+    .vendor-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.45rem;
+    }
+    .vendor-tag {
+      font-size: 0.72rem;
+      padding: 0.16rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.9;
+    }
+    .vendor-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+    .vendor-filters select {
+      padding: 0.3rem 0.6rem;
+      border-radius: 0.4rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: #050608;
+      color: #f5f5f5;
+      font-size: 0.8rem;
+    }
+
     .card {
       border-radius: 1rem;
       padding: 1.1rem;
@@ -553,6 +597,32 @@
           </div>
         </section>
 
+        <!-- VENDORS DIRECTORY SECTION -->
+        <section class="section">
+          <div class="container">
+            <h3 class="section-title">Find a WTF partner</h3>
+            <p style="font-size:0.86rem; color:rgba(245,245,245,0.85); max-width:36rem;">
+              This directory lists active partner businesses from the WTF database. Filters are simple
+              for now; in a later phase this becomes a map/search experience with distance by location.
+            </p>
+            <div class="vendor-filters">
+              <span>Filter:</span>
+              <select id="vendor-filter-category">
+                <option value="">All categories</option>
+              </select>
+              <select id="vendor-filter-state">
+                <option value="">All states</option>
+              </select>
+              <button class="btn btn-outline" id="vendor-filter-reset" type="button">
+                Reset filters
+              </button>
+            </div>
+            <div id="vendors-list" class="vendors-grid">
+              <!-- Filled dynamically from Supabase -->
+            </div>
+          </div>
+        </section>
+
         <section class="section">
           <div class="container">
             <h3 class="section-title">For licensed partners &amp; legal safety</h3>
@@ -742,15 +812,20 @@
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-    // Supabase project values
     const SUPABASE_URL = "https://ztospksseftjupuuwtoa.supabase.co";
     const SUPABASE_ANON_KEY =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0b3Nwa3NzZWZ0anVwdXV3dG9hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ0Mzg0MTYsImV4cCI6MjA4MDAxNDQxNn0.Dvec8LfAUliX06yLs69PCQwMjjTWPYKnYuNBJn3t20U";
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    // DOM references
     const offersListEl = document.getElementById("offers-list");
+    const vendorsListEl = document.getElementById("vendors-list");
+    const vendorFilterCategory = document.getElementById("vendor-filter-category");
+    const vendorFilterState = document.getElementById("vendor-filter-state");
+    const vendorFilterReset = document.getElementById("vendor-filter-reset");
 
+    // Load offers
     async function loadOffers() {
       if (!offersListEl) return;
 
@@ -828,6 +903,107 @@
       }
     }
 
+    // Load vendors directory
+    async function loadVendors() {
+      if (!vendorsListEl) return;
+
+      vendorsListEl.textContent = "Loading partner businesses…";
+
+      const { data: vendors, error } = await supabase
+        .from("vendors")
+        .select("*")
+        .eq("is_active", true)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Error loading vendors:", error);
+        vendorsListEl.textContent = "Could not load partners right now.";
+        return;
+      }
+
+      if (!vendors || vendors.length === 0) {
+        vendorsListEl.textContent = "No partners added yet.";
+        return;
+      }
+
+      // Populate filter dropdowns
+      const categories = [...new Set(vendors.map((v) => v.category).filter(Boolean))].sort();
+      const states = [...new Set(vendors.map((v) => v.state).filter(Boolean))].sort();
+
+      if (vendorFilterCategory && vendorFilterCategory.options.length === 1) {
+        categories.forEach((cat) => {
+          const opt = document.createElement("option");
+          opt.value = cat;
+          opt.textContent = cat;
+          vendorFilterCategory.appendChild(opt);
+        });
+      }
+
+      if (vendorFilterState && vendorFilterState.options.length === 1) {
+        states.forEach((st) => {
+          const opt = document.createElement("option");
+          opt.value = st;
+          opt.textContent = st;
+          vendorFilterState.appendChild(opt);
+        });
+      }
+
+      function renderList() {
+        const catVal = vendorFilterCategory ? vendorFilterCategory.value : "";
+        const stateVal = vendorFilterState ? vendorFilterState.value : "";
+
+        const filtered = vendors.filter((v) => {
+          const catOk = !catVal || v.category === catVal;
+          const stateOk = !stateVal || v.state === stateVal;
+          return catOk && stateOk;
+        });
+
+        vendorsListEl.innerHTML = "";
+
+        if (filtered.length === 0) {
+          vendorsListEl.textContent = "No partners match these filters.";
+          return;
+        }
+
+        filtered.forEach((v) => {
+          const card = document.createElement("div");
+          card.className = "card";
+
+          const cityState = [v.city, v.state].filter(Boolean).join(", ");
+          const categoryLabel = v.category || "partner";
+
+          card.innerHTML = `
+            <h4>${v.name}</h4>
+            <div class="vendor-meta">
+              ${cityState || "Location TBA"}
+            </div>
+            <div class="vendor-chip-row">
+              <span class="vendor-tag">${categoryLabel}</span>
+              ${v.country ? `<span class="vendor-tag">${v.country}</span>` : ""}
+            </div>
+          `;
+
+          vendorsListEl.appendChild(card);
+        });
+      }
+
+      renderList();
+
+      if (vendorFilterCategory) {
+        vendorFilterCategory.onchange = renderList;
+      }
+      if (vendorFilterState) {
+        vendorFilterState.onchange = renderList;
+      }
+      if (vendorFilterReset) {
+        vendorFilterReset.onclick = () => {
+          if (vendorFilterCategory) vendorFilterCategory.value = "";
+          if (vendorFilterState) vendorFilterState.value = "";
+          renderList();
+        };
+      }
+    }
+
     // Footer year
     document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -849,6 +1025,7 @@
       });
       if (viewName === "home") {
         loadOffers();
+        loadVendors();
       }
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -1099,8 +1276,9 @@
       });
     }
 
-    // Initial load
+    // Initial load for home view
     loadOffers();
+    loadVendors();
   </script>
 </body>
 </html>
