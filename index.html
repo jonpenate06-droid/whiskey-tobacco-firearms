@@ -127,6 +127,18 @@
     .btn-outline:hover { border-color: #c58b3a; }
     .btn-primary:hover { filter: brightness(1.05); }
 
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.25);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
     .hero { padding: 3rem 0 2.4rem; }
     .hero-inner {
       display: grid;
@@ -444,6 +456,50 @@
       color: rgba(245,245,245,0.75);
     }
 
+    /* Admin */
+    .admin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+      margin-bottom: 1.4rem;
+    }
+    .admin-stat {
+      border-radius: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 0.9rem;
+      background: #050608;
+      font-size: 0.85rem;
+    }
+    .admin-stat .label {
+      font-size: 0.78rem;
+      color: rgba(245,245,245,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .admin-stat .value {
+      font-size: 1.4rem;
+      margin-top: 0.2rem;
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+    .admin-table th,
+    .admin-table td {
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      padding: 0.35rem 0.3rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .admin-table th {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.7rem;
+      color: rgba(245,245,245,0.75);
+    }
+
     footer {
       border-top: 1px solid rgba(255,255,255,0.08);
       padding: 1.3rem 0 2rem;
@@ -494,6 +550,7 @@
           <button type="button" data-view="home" class="active">Home</button>
           <button type="button" data-view="member">Member</button>
           <button type="button" data-view="vendor">Vendor</button>
+          <button type="button" data-view="admin" id="nav-admin" style="display:none;">Admin</button>
         </nav>
         <div class="nav-cta">
           <div id="nav-user" class="nav-user"></div>
@@ -745,35 +802,60 @@
       <div id="view-vendor" class="view">
         <section class="sub-hero">
           <div class="container">
-            <h1>Vendor / partner area (demo)</h1>
+            <h1>Vendor / partner area</h1>
             <p>
-              This shows how a licensed partner can check a member’s code and mark it used.
-              In the full system this will require a vendor login, but the database logic is already in place.
+              Partners use this portal to redeem member vouchers at the counter.  
+              Log in with your approved vendor email address. If you’re not yet a vendor, you can still
+              read the rules but won’t see the redeem tools.
             </p>
           </div>
         </section>
 
         <section class="sub-content">
           <div class="container">
-            <h3 class="section-title">Redeem a voucher code</h3>
-            <div class="voucher-panel">
+            <div id="vendor-locked" class="voucher-panel">
               <p>
-                In production, you will scan a QR or barcode. Here we just type or paste a code.  
-                When you redeem a code here it will be treated as “used” in the database.
+                To access the vendor portal, sign in using the email that WTF has approved for your
+                business. Once your account is flagged as a vendor, you’ll see the voucher scanner and
+                basic redemption history here.
               </p>
+              <p class="auth-note" style="margin-top:0.6rem;">
+                You can sign in on the <strong>Member</strong> page using the same vendor email – the system
+                will recognize you as both a member and a vendor if configured that way.
+              </p>
+            </div>
 
-              <div class="input-row">
-                <input id="vendor-code-input" type="text" placeholder="Paste voucher code here" />
-                <button class="btn btn-primary" id="btn-redeem" type="button">
-                  Mark as redeemed
-                </button>
+            <div id="vendor-portal" class="hidden">
+              <h3 class="section-title">Redeem a voucher code</h3>
+              <div class="voucher-panel">
+                <p>
+                  In production, you will scan a QR or barcode. Here we just type or paste a code.  
+                  When you redeem a code here it will be treated as “used” in the database and linked
+                  to this vendor.
+                </p>
+
+                <div class="input-row">
+                  <input id="vendor-code-input" type="text" placeholder="Paste voucher code here" />
+                  <button class="btn btn-primary" id="btn-redeem" type="button">
+                    Mark as redeemed
+                  </button>
+                </div>
+
+                <div class="voucher-status" id="vendor-status" style="margin-top:0.8rem;"></div>
+
+                <p style="margin-top:1rem; font-size:0.8rem; color:rgba(245,245,245,0.75);">
+                  Once a code is redeemed, it cannot be used again. Screenshots and copies will fail at the counter.
+                </p>
               </div>
 
-              <div class="voucher-status" id="vendor-status" style="margin-top:0.8rem;"></div>
-
-              <p style="margin-top:1rem; font-size:0.8rem; color:rgba(245,245,245,0.75);">
-                Once a code is redeemed, it cannot be used again. Screenshots and copies will fail at the counter.
-              </p>
+              <section class="section" style="border-top:none; padding-top:2rem;">
+                <h3 class="section-title">Recent redemptions (this vendor)</h3>
+                <div class="voucher-panel">
+                  <div id="vendor-redeem-list" style="font-size:0.8rem; color:rgba(245,245,245,0.85);">
+                    Loading…
+                  </div>
+                </div>
+              </section>
             </div>
 
             <section class="section" style="border-top:none; padding-top:2rem;">
@@ -798,6 +880,73 @@
           </div>
         </section>
       </div>
+
+      <!-- ADMIN VIEW -->
+      <div id="view-admin" class="view">
+        <section class="sub-hero">
+          <div class="container">
+            <h1>Admin dashboard</h1>
+            <p>
+              Internal WTF view. Shows voucher counts and recent activity. Only users listed in the
+              <code>admin_users</code> table can see this page.
+            </p>
+          </div>
+        </section>
+
+        <section class="sub-content">
+          <div class="container">
+            <div id="admin-locked" class="voucher-panel">
+              <p>
+                You must be an admin to view this dashboard. If this is your account, add your email
+                to the <code>admin_users</code> table in Supabase and refresh.
+              </p>
+            </div>
+
+            <div id="admin-panel" class="hidden">
+              <h3 class="section-title">Voucher stats</h3>
+              <div class="admin-grid">
+                <div class="admin-stat">
+                  <div class="label">Total vouchers</div>
+                  <div class="value" id="stat-total">–</div>
+                </div>
+                <div class="admin-stat">
+                  <div class="label">Active (not redeemed)</div>
+                  <div class="value" id="stat-active">–</div>
+                </div>
+                <div class="admin-stat">
+                  <div class="label">Redeemed</div>
+                  <div class="value" id="stat-redeemed">–</div>
+                </div>
+              </div>
+
+              <h3 class="section-title">Recent vouchers</h3>
+              <div class="voucher-panel">
+                <div style="font-size:0.78rem; margin-bottom:0.4rem;">
+                  Latest 50 vouchers from any member or vendor.
+                </div>
+                <div style="overflow-x:auto;">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Code</th>
+                        <th>Offer</th>
+                        <th>Member</th>
+                        <th>Status</th>
+                        <th>Vendor</th>
+                        <th>Issued</th>
+                        <th>Redeemed</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-voucher-rows">
+                      <tr><td colspan="7">Loading…</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
 
     <footer>
@@ -818,14 +967,36 @@
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // DOM references
+    // Role flags
+    let currentUserEmail = null;
+    let isVendor = false;
+    let isAdmin = false;
+    let currentVendorId = null;
+
+    // DOM refs
     const offersListEl = document.getElementById("offers-list");
     const vendorsListEl = document.getElementById("vendors-list");
     const vendorFilterCategory = document.getElementById("vendor-filter-category");
     const vendorFilterState = document.getElementById("vendor-filter-state");
     const vendorFilterReset = document.getElementById("vendor-filter-reset");
 
-    // Load offers
+    const vendorLocked = document.getElementById("vendor-locked");
+    const vendorPortal = document.getElementById("vendor-portal");
+    const vendorRedeemList = document.getElementById("vendor-redeem-list");
+
+    const adminLocked = document.getElementById("admin-locked");
+    const adminPanel = document.getElementById("admin-panel");
+    const adminNavButton = document.getElementById("nav-admin");
+
+    const statTotal = document.getElementById("stat-total");
+    const statActive = document.getElementById("stat-active");
+    const statRedeemed = document.getElementById("stat-redeemed");
+    const adminVoucherRows = document.getElementById("admin-voucher-rows");
+
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // ---------- HOME: OFFERS ----------
     async function loadOffers() {
       if (!offersListEl) return;
 
@@ -887,9 +1058,7 @@
           <div class="offer-card-header">
             <div>
               <h4>${offer.title}</h4>
-              <div class="offer-vendor">${vendorName}${
-          locationText ? " · " + locationText : ""
-        }</div>
+              <div class="offer-vendor">${vendorName}${locationText ? " · " + locationText : ""}</div>
             </div>
             <div class="offer-badge">${discountText}</div>
           </div>
@@ -903,7 +1072,7 @@
       }
     }
 
-    // Load vendors directory
+    // ---------- HOME: VENDORS DIRECTORY ----------
     async function loadVendors() {
       if (!vendorsListEl) return;
 
@@ -926,7 +1095,6 @@
         return;
       }
 
-      // Populate filter dropdowns
       const categories = [...new Set(vendors.map((v) => v.category).filter(Boolean))].sort();
       const states = [...new Set(vendors.map((v) => v.state).filter(Boolean))].sort();
 
@@ -989,12 +1157,8 @@
 
       renderList();
 
-      if (vendorFilterCategory) {
-        vendorFilterCategory.onchange = renderList;
-      }
-      if (vendorFilterState) {
-        vendorFilterState.onchange = renderList;
-      }
+      if (vendorFilterCategory) vendorFilterCategory.onchange = renderList;
+      if (vendorFilterState) vendorFilterState.onchange = renderList;
       if (vendorFilterReset) {
         vendorFilterReset.onclick = () => {
           if (vendorFilterCategory) vendorFilterCategory.value = "";
@@ -1004,14 +1168,12 @@
       }
     }
 
-    // Footer year
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // ----- VIEW SWITCHING -----
+    // ---------- VIEW SWITCHING ----------
     const views = {
       home: document.getElementById("view-home"),
       member: document.getElementById("view-member"),
       vendor: document.getElementById("view-vendor"),
+      admin: document.getElementById("view-admin"),
     };
     const navButtons = document.querySelectorAll("[data-view]");
 
@@ -1023,10 +1185,18 @@
       document.querySelectorAll(".nav-links button").forEach((btn) => {
         btn.classList.toggle("active", btn.getAttribute("data-view") === viewName);
       });
+
       if (viewName === "home") {
         loadOffers();
         loadVendors();
       }
+      if (viewName === "admin" && isAdmin) {
+        loadAdminDashboard();
+      }
+      if (viewName === "vendor" && isVendor) {
+        loadVendorRedemptions();
+      }
+
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -1037,7 +1207,7 @@
       });
     });
 
-    // ----- AUTH UI -----
+    // ---------- AUTH UI ----------
     const navUser = document.getElementById("nav-user");
     const authLoggedOut = document.getElementById("auth-logged-out");
     const authLoggedIn = document.getElementById("auth-logged-in");
@@ -1045,10 +1215,74 @@
     const authMessage = document.getElementById("auth-message");
     const memberContent = document.getElementById("member-content");
 
-    let currentUserEmail = null;
-
     function setAuthMessage(msg) {
       authMessage.textContent = msg || "";
+    }
+
+    async function loadUserRoles(email) {
+      isVendor = false;
+      isAdmin = false;
+      currentVendorId = null;
+
+      if (!email) {
+        updateRoleUI();
+        return;
+      }
+
+      // Check vendor_users
+      const { data: vendorRecord, error: vendorError } = await supabase
+        .from("vendor_users")
+        .select("*")
+        .eq("email", email)
+        .maybeSingle();
+
+      if (!vendorError && vendorRecord) {
+        isVendor = true;
+        currentVendorId = vendorRecord.vendor_id || null;
+      }
+
+      // Check admin_users
+      const { data: adminRecord, error: adminError } = await supabase
+        .from("admin_users")
+        .select("*")
+        .eq("email", email)
+        .maybeSingle();
+
+      if (!adminError && adminRecord) {
+        isAdmin = true;
+      }
+
+      updateRoleUI();
+    }
+
+    function updateRoleUI() {
+      // Vendor portal visibility
+      if (vendorPortal && vendorLocked) {
+        if (isVendor || isAdmin) {
+          vendorPortal.classList.remove("hidden");
+          vendorLocked.classList.add("hidden");
+        } else {
+          vendorPortal.classList.add("hidden");
+          vendorLocked.classList.remove("hidden");
+        }
+      }
+
+      // Admin nav and panel visibility
+      if (adminNavButton && adminLocked && adminPanel) {
+        if (isAdmin) {
+          adminNavButton.style.display = "inline-block";
+          adminLocked.classList.add("hidden");
+          adminPanel.classList.remove("hidden");
+        } else {
+          adminNavButton.style.display = "none";
+          adminLocked.classList.remove("hidden");
+          adminPanel.classList.add("hidden");
+          // If user was on admin view and lost admin rights, send them home
+          if (document.getElementById("view-admin").classList.contains("view-active")) {
+            switchView("home");
+          }
+        }
+      }
     }
 
     function updateAuthUI(session) {
@@ -1061,6 +1295,8 @@
         memberContent.classList.remove("hidden");
         authUserEmail.textContent = currentUserEmail || "(no email)";
         if (navUser) navUser.textContent = currentUserEmail || "";
+
+        loadUserRoles(currentUserEmail);
       } else {
         currentUserEmail = null;
         authLoggedOut.classList.remove("hidden");
@@ -1068,14 +1304,16 @@
         memberContent.classList.add("hidden");
         authUserEmail.textContent = "";
         if (navUser) navUser.textContent = "";
+        isVendor = false;
+        isAdmin = false;
+        currentVendorId = null;
+        updateRoleUI();
       }
     }
 
     (async () => {
       const { data, error } = await supabase.auth.getSession();
-      if (error) {
-        console.error("Error getting session:", error);
-      }
+      if (error) console.error("Error getting session:", error);
       updateAuthUI(data?.session || null);
     })();
 
@@ -1083,7 +1321,7 @@
       updateAuthUI(session);
     });
 
-    // ----- AUTH ACTIONS -----
+    // ---------- AUTH ACTIONS ----------
     const emailInput = document.getElementById("auth-email");
     const passwordInput = document.getElementById("auth-password");
     const btnEmailLogin = document.getElementById("btn-email-login");
@@ -1139,7 +1377,7 @@
       });
     }
 
-    // ----- VOUCHER GENERATION (SUPABASE) -----
+    // ---------- VOUCHER GENERATION ----------
     let currentVoucherCode = null;
 
     function createVoucherCode() {
@@ -1175,6 +1413,7 @@
             code,
             offer_label: offerId,
             member_email: currentUserEmail,
+            status: "active",
           })
           .select()
           .single();
@@ -1202,13 +1441,52 @@
       });
     }
 
-    // ----- VENDOR REDEEM (SUPABASE) -----
+    // ---------- VENDOR REDEEM ----------
     const vendorInput = document.getElementById("vendor-code-input");
     const btnRedeem = document.getElementById("btn-redeem");
     const vendorStatus = document.getElementById("vendor-status");
 
+    async function loadVendorRedemptions() {
+      if (!vendorRedeemList || !currentVendorId) {
+        if (vendorRedeemList) vendorRedeemList.textContent = "No vendor ID linked to this account yet.";
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("vouchers")
+        .select("*")
+        .eq("vendor_id", currentVendorId)
+        .order("redeemed_at", { ascending: false })
+        .limit(20);
+
+      if (error) {
+        console.error("Error loading vendor redemptions:", error);
+        vendorRedeemList.textContent = "Could not load redemptions.";
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        vendorRedeemList.textContent = "No vouchers redeemed yet for this vendor.";
+        return;
+      }
+
+      const lines = data.map((v) => {
+        const when = v.redeemed_at
+          ? new Date(v.redeemed_at).toLocaleString()
+          : "–";
+        return `${v.code} · ${v.offer_label} · ${v.member_email} · ${when}`;
+      });
+
+      vendorRedeemList.innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
+    }
+
     if (btnRedeem) {
       btnRedeem.addEventListener("click", async () => {
+        if (!isVendor && !isAdmin) {
+          vendorStatus.textContent = "Only vendor or admin accounts can redeem vouchers.";
+          return;
+        }
+
         const entered = (vendorInput.value || "").trim().toUpperCase();
         if (!entered) {
           vendorStatus.textContent = "Please enter a voucher code.";
@@ -1250,6 +1528,7 @@
           .update({
             status: "redeemed",
             redeemed_at: new Date().toISOString(),
+            vendor_id: currentVendorId,
           })
           .eq("code", entered)
           .select()
@@ -1273,10 +1552,76 @@
           voucherStatus.innerHTML =
             "Status: <span class='used'>USED (one-time voucher, now redeemed)</span>";
         }
+
+        loadVendorRedemptions();
       });
     }
 
-    // Initial load for home view
+    // ---------- ADMIN DASHBOARD ----------
+    async function loadAdminDashboard() {
+      if (!isAdmin) return;
+
+      const { data: vouchers, error } = await supabase
+        .from("vouchers")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(50);
+
+      if (error) {
+        console.error("Error loading vouchers:", error);
+        adminVoucherRows.innerHTML = "<tr><td colspan='7'>Could not load vouchers.</td></tr>";
+        return;
+      }
+
+      const total = vouchers.length;
+      const redeemed = vouchers.filter((v) => v.status === "redeemed").length;
+      const active = vouchers.filter((v) => v.status !== "redeemed").length;
+
+      statTotal.textContent = total.toString();
+      statActive.textContent = active.toString();
+      statRedeemed.textContent = redeemed.toString();
+
+      if (vouchers.length === 0) {
+        adminVoucherRows.innerHTML = "<tr><td colspan='7'>No vouchers yet.</td></tr>";
+        return;
+      }
+
+      // load vendors for names
+      const vendorIds = [...new Set(vouchers.map((v) => v.vendor_id).filter(Boolean))];
+      let vendorsById = {};
+      if (vendorIds.length > 0) {
+        const { data: vendors, error: vendorsErr } = await supabase
+          .from("vendors")
+          .select("*")
+          .in("id", vendorIds);
+        if (!vendorsErr && vendors) {
+          vendorsById = Object.fromEntries(vendors.map((v) => [v.id, v]));
+        }
+      }
+
+      adminVoucherRows.innerHTML = vouchers
+        .map((v) => {
+          const issued = v.created_at ? new Date(v.created_at).toLocaleString() : "–";
+          const redeemedAt = v.redeemed_at ? new Date(v.redeemed_at).toLocaleString() : "–";
+          const vendorName = v.vendor_id && vendorsById[v.vendor_id]
+            ? vendorsById[v.vendor_id].name
+            : "";
+          return `
+            <tr>
+              <td>${v.code}</td>
+              <td>${v.offer_label || ""}</td>
+              <td>${v.member_email || ""}</td>
+              <td>${v.status || ""}</td>
+              <td>${vendorName}</td>
+              <td>${issued}</td>
+              <td>${redeemedAt}</td>
+            </tr>
+          `;
+        })
+        .join("");
+    }
+
+    // Initial home data
     loadOffers();
     loadVendors();
   </script>
