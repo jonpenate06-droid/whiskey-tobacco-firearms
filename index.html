@@ -1,64 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Primary SEO -->
-<meta charset="utf-8" />
-<title>Whiskey Tobacco Firearms (WTF) — Member Discounts on Cigars, Bourbon, Whiskey, Firearms & Training</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<meta
-  name="description"
-  content="Whiskey Tobacco Firearms (WTF) is a Veteran-Owned membership program offering exclusive savings on cigars, bourbon, whiskey, firearms, accessories, firearm training, and shooting ranges. Proudly supporting veterans, first responders, and healthcare workers. While our goal is to become a nationwide platform bringing together premium partners from across the country, we are currently a small local business growing our network one trusted partner at a time."
-/>
-
-<meta
-  name="keywords"
-  content="Whiskey Tobacco Firearms, Veteran Owned, WTF membership, cigar discounts, bourbon discounts, whiskey deals, firearm discounts, range discounts, firearm training, tactical instructors, cigar lounges, bourbon clubs, first responders, healthcare workers, local business"
-/>
-
-<link rel="canonical" href="https://whiskeytobaccofirearms.com/" />
-
-<!-- Robots -->
-<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://whiskeytobaccofirearms.com/" />
-<meta property="og:title" content="Whiskey Tobacco Firearms (WTF) — Premium Member Discounts" />
-<meta
-  property="og:description"
-  content="Whiskey Tobacco Firearms (WTF) is a Veteran-Owned membership platform offering discounts at cigar lounges, whiskey retailers, firearm dealers, shooting ranges, and training providers. We proudly support veterans, first responders, and healthcare workers. While building toward national reach, we are currently a small local business focused on trusted, high-quality partners."
-/>
-<!-- <meta property="og:image" content="https://whiskeytobaccofirearms.com/og-image.jpg" /> -->
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:url" content="https://whiskeytobaccofirearms.com/" />
-<meta name="twitter:title" content="Whiskey Tobacco Firearms (WTF) — Member Discounts" />
-<meta
-  name="twitter:description"
-  content="Veteran-Owned membership program offering exclusive savings on cigars, whiskey, firearms, accessories, shooting ranges, and training courses — proudly supporting veterans, first responders, and healthcare workers."
-/>
-<!-- <meta name="twitter:image" content="https://whiskeytobaccofirearms.com/og-image.jpg" /> -->
-
-<!-- Favicons / app icons -->
-<!--
-<link rel="icon" href="/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
--->
-
   <meta charset="UTF-8" />
-  <title>Whiskey Tobacco Firearms (WTF)</title>
+  <title>Whiskey Tobacco Firearms (WTF) — Member Discounts</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Primary SEO description -->
   <meta
     name="description"
-    content="Whiskey Tobacco Firearms (WTF) – private membership club for cigars, whiskey and firearms-related training from licensed businesses only. No private sellers."
+    content="Whiskey Tobacco Firearms (WTF) is a Veteran-Owned membership program offering exclusive savings on cigars, bourbon, whiskey, firearms, accessories, training courses, and shooting ranges. Proudly supporting veterans, first responders, and healthcare workers. Currently a small local Miami-based business growing toward nationwide coverage."
   />
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background-color: #050608;
+      background-color: #0b0d10;           /* lighter, charcoal base */
       color: #f5f5f5;
       line-height: 1.6;
     }
@@ -69,12 +26,16 @@
     .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
 
     header {
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       position: sticky;
       top: 0;
       z-index: 10;
       backdrop-filter: blur(12px);
-      background: rgba(5,6,8,0.9);
+      background: linear-gradient(
+        90deg,
+        rgba(11,13,16,0.96),
+        rgba(18,20,26,0.96)
+      );
     }
     .navbar {
       display: flex;
@@ -98,7 +59,8 @@
       font-weight: 700;
       font-size: 0.9rem;
       letter-spacing: 0.08em;
-      background: radial-gradient(circle at 20% 0%, #222, #050608);
+      background: radial-gradient(circle at 20% 0%, #30343f, #11141b);
+      color: #fdf8ee;
     }
     .logo-text {
       display: flex;
@@ -126,7 +88,7 @@
       border: none;
       color: inherit;
       cursor: pointer;
-      opacity: 0.8;
+      opacity: 0.75;
     }
     .nav-links button:hover { opacity: 1; }
     .nav-links button.active {
@@ -160,17 +122,17 @@
       white-space: nowrap;
     }
     .btn-outline {
-      border-color: rgba(255,255,255,0.3);
-      background: transparent;
+      border-color: rgba(255,255,255,0.35);
+      background: rgba(16,18,24,0.9);
       color: #f5f5f5;
     }
     .btn-primary {
       border-color: #c58b3a;
-      background: linear-gradient(120deg, #c58b3a, #8c5a19);
+      background: linear-gradient(120deg, #f0c36b, #c58b3a, #8c5a19);
       color: #050608;
       font-weight: 600;
     }
-    .btn-outline:hover { border-color: #c58b3a; }
+    .btn-outline:hover { border-color: #c58b3a; background:#161923; }
     .btn-primary:hover { filter: brightness(1.05); }
 
     .badge {
@@ -203,10 +165,13 @@
       font-size: clamp(2rem, 3vw, 2.6rem);
       margin-bottom: 0.9rem;
     }
+    .hero-title span.highlight {
+      color: #f0c36b;
+    }
     .hero-text {
       font-size: 0.98rem;
-      max-width: 32rem;
-      color: rgba(245,245,245,0.86);
+      max-width: 34rem;
+      color: rgba(245,245,245,0.88);
       margin-bottom: 1.4rem;
     }
     .hero-actions {
@@ -218,19 +183,43 @@
     .hero-note {
       font-size: 0.78rem;
       color: rgba(245,245,245,0.7);
-      max-width: 32rem;
+      max-width: 34rem;
     }
     .hero-note strong { color: #f8e3c0; }
+
+    /* patriotic / service strip */
+    .service-strip {
+      margin-top: 1.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .service-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: radial-gradient(circle at 0 0, #262a34, #151821);
+      color: rgba(247,247,247,0.9);
+    }
+    .service-pill span.emoji {
+      font-size: 0.85rem;
+    }
 
     .hero-card {
       border-radius: 1.1rem;
       padding: 1.6rem;
       border: 1px solid rgba(255,255,255,0.12);
       background:
-        radial-gradient(circle at 0 0, rgba(197,139,58,0.15), transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(52,143,191,0.25), transparent 55%),
-        #07080b;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.5);
+        radial-gradient(circle at 0 0, rgba(197,139,58,0.18), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(75,114,170,0.28), transparent 55%),
+        linear-gradient(145deg, #181b24, #10131b);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.6);
       font-size: 0.85rem;
     }
     .hero-card h2 {
@@ -250,7 +239,7 @@
       border-radius: 999px;
       padding: 0.28rem 0.7rem;
       font-size: 0.7rem;
-      background: rgba(5,6,8,0.85);
+      background: rgba(11,13,16,0.95);
       border: 1px solid rgba(255,255,255,0.16);
       text-transform: uppercase;
       letter-spacing: 0.12em;
@@ -270,7 +259,7 @@
     }
     .hero-card-footer {
       font-size: 0.72rem;
-      color: rgba(245,245,245,0.75);
+      color: rgba(245,245,245,0.8);
       border-top: 1px dashed rgba(255,255,255,0.2);
       padding-top: 0.7rem;
     }
@@ -285,6 +274,12 @@
       letter-spacing: 0.18em;
       margin-bottom: 1.4rem;
       color: rgba(245,245,245,0.9);
+    }
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: rgba(245,245,245,0.86);
+      max-width: 40rem;
+      margin-bottom: 1rem;
     }
     .grid-3 {
       display: grid;
@@ -364,7 +359,7 @@
       padding: 0.3rem 0.6rem;
       border-radius: 0.4rem;
       border: 1px solid rgba(255,255,255,0.3);
-      background: #050608;
+      background: #10131a;
       color: #f5f5f5;
       font-size: 0.8rem;
     }
@@ -373,20 +368,21 @@
       border-radius: 1rem;
       padding: 1.1rem;
       border: 1px solid rgba(255,255,255,0.12);
-      background: radial-gradient(circle at 0 0, rgba(197,139,58,0.12), transparent 55%),
-                  #050608;
+      background:
+        radial-gradient(circle at 0 0, rgba(197,139,58,0.12), transparent 55%),
+        linear-gradient(145deg,#181b24,#10131b);
       font-size: 0.86rem;
     }
     .card h4 { font-size: 0.9rem; margin-bottom: 0.4rem; }
     .card p {
       font-size: 0.83rem;
-      color: rgba(245,245,245,0.82);
+      color: rgba(245,245,245,0.86);
     }
     .card small {
       display: block;
       margin-top: 0.4rem;
       font-size: 0.74rem;
-      color: rgba(245,245,245,0.7);
+      color: rgba(245,245,245,0.75);
     }
 
     .two-col {
@@ -397,7 +393,7 @@
       font-size: 0.86rem;
     }
     .two-col p {
-      color: rgba(245,245,245,0.85);
+      color: rgba(245,245,245,0.88);
       margin-bottom: 0.7rem;
     }
     .two-col ul { padding-left: 1rem; margin-top: 0.5rem; }
@@ -406,7 +402,7 @@
       border-radius: 0.9rem;
       border: 1px solid rgba(255,255,255,0.16);
       padding: 1rem;
-      background: #050608;
+      background: linear-gradient(145deg,#141822,#0d1018);
       font-size: 0.8rem;
     }
     .policy-box strong { color: #f8e3c0; }
@@ -418,7 +414,7 @@
     .sub-hero h1 { font-size: 1.8rem; margin-bottom: 0.4rem; }
     .sub-hero p {
       max-width: 40rem;
-      color: rgba(245,245,245,0.85);
+      color: rgba(245,245,245,0.88);
     }
 
     .sub-content { padding-bottom: 2.5rem; }
@@ -428,7 +424,7 @@
       border-radius: 1rem;
       border: 1px solid rgba(255,255,255,0.18);
       padding: 1rem;
-      background: #050608;
+      background: linear-gradient(135deg,#151922,#0f1117);
       font-size: 0.86rem;
     }
     .voucher-code-box {
@@ -441,11 +437,12 @@
       text-align: center;
       letter-spacing: 0.18em;
       font-size: 0.9rem;
+      background:#050608;
     }
     .voucher-status {
       margin-top: 0.5rem;
       font-size: 0.8rem;
-      color: rgba(245,245,245,0.8);
+      color: rgba(245,245,245,0.86);
     }
     .voucher-status span.used { color: #f39c12; }
 
@@ -462,7 +459,7 @@
       padding: 0.4rem 0.6rem;
       border-radius: 0.5rem;
       border: 1px solid rgba(255,255,255,0.2);
-      background: #050608;
+      background: #10131a;
       color: #f5f5f5;
       font-size: 0.86rem;
     }
@@ -472,7 +469,7 @@
       border-radius: 0.9rem;
       border: 1px solid rgba(255,255,255,0.18);
       padding: 1rem;
-      background: #050608;
+      background: linear-gradient(135deg,#151922,#0f1117);
       font-size: 0.85rem;
     }
     .auth-panel h3 {
@@ -492,14 +489,14 @@
       padding: 0.4rem 0.6rem;
       border-radius: 0.5rem;
       border: 1px solid rgba(255,255,255,0.2);
-      background: #050608;
+      background: #10131a;
       color: #f5f5f5;
       font-size: 0.86rem;
     }
     .auth-note {
       margin-top: 0.5rem;
       font-size: 0.78rem;
-      color: rgba(245,245,245,0.75);
+      color: rgba(245,245,245,0.8);
     }
 
     /* Admin */
@@ -514,7 +511,7 @@
       border-radius: 0.9rem;
       border: 1px solid rgba(255,255,255,0.16);
       padding: 0.9rem;
-      background: #050608;
+      background: #12151d;
       font-size: 0.85rem;
     }
     .admin-stat .label {
@@ -552,7 +549,7 @@
       border-radius: 0.8rem;
       border: 1px solid rgba(255,255,255,0.2);
       padding: 0.6rem;
-      background: #050608;
+      background: #10131a;
     }
     #qr-reader {
       width: 100%;
@@ -575,6 +572,7 @@
       font-size: 0.78rem;
       color: rgba(245,245,245,0.7);
       margin-top: auto;
+      background: linear-gradient(90deg,#10131a,#0b0d10);
     }
     .footer-inner {
       display: flex;
@@ -597,6 +595,9 @@
       .nav-user { display: none; }
       #qr-reader {
         max-width: 100%;
+      }
+      .service-strip {
+        margin-top: 1.1rem;
       }
     }
     @media (max-width: 600px) {
@@ -640,12 +641,13 @@
             <div>
               <div class="eyebrow">Private membership · licensed partners only</div>
               <h1 class="hero-title">
-                Exclusive access to cigars, whiskey, and firearms training from trusted businesses.
+                Exclusive access to <span class="highlight">cigars, whiskey, and firearms training</span> from trusted businesses.
               </h1>
               <p class="hero-text">
-                Whiskey Tobacco Firearms (WTF) connects members with vetted cigar lounges, whiskey bars,
-                ranges, and certified firearms trainers. Members unlock in-person discounts using single-use
-                codes at legitimate shops only.
+                Whiskey Tobacco Firearms (WTF) is a Veteran-Owned members club that connects discerning adults
+                with vetted cigar lounges, whiskey bars, shooting ranges, and certified firearms instructors.
+                We proudly support veterans, first responders, and healthcare workers — starting as a small
+                local business in Miami with the goal of growing into a nationwide network.
               </p>
               <div class="hero-actions">
                 <button class="btn btn-primary" type="button" data-view="member">Become a member</button>
@@ -656,7 +658,32 @@
                 deals, or online alcohol sales. All offers are redeemed directly with licensed businesses
                 that follow federal, state, and local laws.
               </p>
+
+              <!-- patriotic + service row -->
+              <div class="service-strip">
+                <div class="service-pill">
+                  <span class="emoji">🇺🇸</span>
+                  Veteran-Owned
+                </div>
+                <div class="service-pill">
+                  <span class="emoji">🪖</span>
+                  Proud USMC background
+                </div>
+                <div class="service-pill">
+                  <span class="emoji">🚒</span>
+                  Supports Fire &amp; Rescue
+                </div>
+                <div class="service-pill">
+                  <span class="emoji">🚓</span>
+                  Supports Law Enforcement
+                </div>
+                <div class="service-pill">
+                  <span class="emoji">⚕️</span>
+                  Supports Healthcare Workers
+                </div>
+              </div>
             </div>
+
             <aside class="hero-card">
               <h2>How WTF works</h2>
               <div class="pill-row">
@@ -679,14 +706,34 @@
                 </li>
                 <li>
                   <span class="bullet">•</span>
-                  <span>Vendors scan the QR with their phone and mark the code used. No extra hardware.</span>
+                  <span>Vendors scan the QR with their phone and mark the code used — no extra hardware.</span>
                 </li>
               </ul>
               <div class="hero-card-footer">
                 All vouchers are stored in Supabase and enforced as single-use.
-                You and your vendors share one source of truth for redemptions.
+                You, your partners, and your members share one source of truth for redemptions.
               </div>
             </aside>
+          </div>
+        </section>
+
+        <!-- About / mission block with full description -->
+        <section class="section">
+          <div class="container">
+            <h3 class="section-title">About Whiskey Tobacco Firearms (WTF)</h3>
+            <p class="section-subtitle">
+              Whiskey Tobacco Firearms (WTF) is a Veteran-Owned membership program offering exclusive
+              savings on cigars, bourbon, whiskey, firearms, accessories, training courses, and shooting
+              ranges. Our mission is to connect members with high-quality brands, experiences, and
+              opportunities in cigars, spirits, and firearms — all while delivering real savings on the
+              things they are already passionate about.
+            </p>
+            <p class="section-subtitle">
+              While the long-term goal is to build a nationwide network of respected lounges, ranges,
+              and instructors, WTF is currently a small local business based in South Florida. Every new
+              partner is vetted for licensing and legitimacy, and we proudly support veterans, first
+              responders, and healthcare workers through both our partnerships and the way we do business.
+            </p>
           </div>
         </section>
 
@@ -700,12 +747,12 @@
                 <small>Members must follow all local, state, and federal regulations.</small>
               </div>
               <div class="card">
-                <h4>2. Find nearby partners</h4>
-                <p>We will expand this into a full map and search experience similar to Yelp or Groupon.</p>
+                <h4>2. Discover trusted partners</h4>
+                <p>Browse cigar lounges, whiskey venues, ranges, and instructors as the directory grows into a full map and search experience.</p>
               </div>
               <div class="card">
                 <h4>3. Generate &amp; scan QR vouchers</h4>
-                <p>Members show a QR code at checkout. Vendors scan with their own phone and mark the code used.</p>
+                <p>Members show a QR code at checkout. Vendors scan with their own phone and mark the code used — simple and trackable.</p>
               </div>
             </div>
           </div>
@@ -715,7 +762,7 @@
         <section class="section">
           <div class="container">
             <h3 class="section-title">Current partner offers</h3>
-            <p style="font-size:0.86rem; color:rgba(245,245,245,0.85); max-width:36rem;">
+            <p class="section-subtitle">
               These offers are loaded directly from the WTF vendor database. Each one is tied
               to a licensed business. Members generate single-use vouchers from the Member area
               using the matching voucher label.
@@ -730,7 +777,7 @@
         <section class="section">
           <div class="container">
             <h3 class="section-title">Find a WTF partner</h3>
-            <p style="font-size:0.86rem; color:rgba(245,245,245,0.85); max-width:36rem;">
+            <p class="section-subtitle">
               This directory lists active partner businesses from the WTF database. Filters are simple
               for now; in a later phase this becomes a map/search experience with distance by location.
             </p>
@@ -843,7 +890,7 @@
 
                 <div style="margin-top:0.8rem;">
                   <label for="offer-select" style="font-size:0.86rem;">Voucher label:</label>
-                  <select id="offer-select" style="margin-left:0.4rem; padding:0.3rem 0.4rem; border-radius:0.4rem; border:1px solid rgba(255,255,255,0.25); background:#050608; color:#f5f5f5; font-size:0.86rem;">
+                  <select id="offer-select" style="margin-left:0.4rem; padding:0.3rem 0.4rem; border-radius:0.4rem; border:1px solid rgba(255,255,255,0.25); background:#10131a; color:#f5f5f5; font-size:0.86rem;">
                     <option value="CIGAR10">CIGAR10</option>
                     <option value="WHISKEY5">WHISKEY5</option>
                     <option value="TRAINING15">TRAINING15</option>
@@ -1051,7 +1098,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode@2.3.10/html5-qrcode.min.js"></script>
 
-  <!-- Supabase + app logic -->
+  <!-- Supabase + app logic (unchanged from your previous version) -->
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
