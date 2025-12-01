@@ -2,7 +2,25 @@
 <html lang="en">
 <head>
   <meta name="google-site-verification" content="99zs3GZ15vMYI_xtfo1W8S6U02dZfCELzHo_PFGam10" /> 
-  
+    <!-- Canonical URL (forces Google to prefer the www version) -->
+  <link rel="canonical" href="https://www.whiskeytobaccofirearms.com/" />
+
+  <!-- Redirect non-www traffic to www -->
+  <script>
+    (function () {
+      var host = window.location.hostname;
+      if (host === "whiskeytobaccofirearms.com") {
+        var newUrl =
+          "https://www.whiskeytobaccofirearms.com" +
+          window.location.pathname +
+          window.location.search +
+          window.location.hash;
+
+        window.location.replace(newUrl);
+      }
+    })();
+  </script>
+
   <meta charset="UTF-8" />
   <title>Whiskey Tobacco Firearms (WTF) — Member Discounts</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
